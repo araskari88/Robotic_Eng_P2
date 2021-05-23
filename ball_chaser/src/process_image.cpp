@@ -81,12 +81,12 @@ void process_image_callback(const sensor_msgs::Image img)
         {
             if (avg_ball_location > mid_limit)
             {
-                ang_z = -0.5 * (avg_ball_location - mid_limit) / (side_limit / 2);  // small rotation to the right
+                ang_z = -0.8 * (avg_ball_location - mid_limit) / (side_limit / 2);  // small rotation to the right
                 lin_x = 0.3 - 0.3 * (avg_ball_location - mid_limit) / (side_limit / 2);  // moderate move forward
             }
             else if (avg_ball_location < mid_limit)
             {
-                ang_z = 0.5 * (mid_limit - avg_ball_location) / (side_limit / 2);  // small rotation to the left
+                ang_z = 0.8 * (mid_limit - avg_ball_location) / (side_limit / 2);  // small rotation to the left
                 lin_x = 0.3 - 0.3 * (mid_limit - avg_ball_location) / (side_limit / 2);  // moderate move forward
             }
             else
