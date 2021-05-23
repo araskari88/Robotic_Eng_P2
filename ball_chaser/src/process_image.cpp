@@ -51,7 +51,7 @@ void process_image_callback(const sensor_msgs::Image img)
             // avg_ball_row += floor(i / img_width);
         }
     }
-    if (n_ball_pixel_seen > 10)
+    if (0.9 * img.height * img.step > n_ball_pixel_seen && n_ball_pixel_seen > 10)
     {
         ball_seen = true;  // ball exists in the view of the robot
         avg_ball_location /= n_ball_pixel_seen;  // calculate the average position of the ball
