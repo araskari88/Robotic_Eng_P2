@@ -51,7 +51,7 @@ void process_image_callback(const sensor_msgs::Image img)
             // avg_ball_row += floor(i / img_width);
         }
     }
-    if (0.9 * img.height * img.step > n_ball_pixel_seen && n_ball_pixel_seen > 10)
+    if (0.1 * img.height * img.step > n_ball_pixel_seen && n_ball_pixel_seen > 10)
     {
         ball_seen = true;  // ball exists in the view of the robot
         avg_ball_location /= n_ball_pixel_seen;  // calculate the average position of the ball
@@ -69,25 +69,25 @@ void process_image_callback(const sensor_msgs::Image img)
         // a linear function defines the speed of the robot rotating to the left and right ranging from 0.1 to 0.5 depending on the location of the point
         if (avg_ball_location < left_limit)
         {
-            ang_z = 0.1 + 0.4 * (left_limit - avg_ball_location) / side_limit;  // rotate to the left
+            ang_z = 0.3 + 0.4 * (left_limit - avg_ball_location) / side_limit;  // rotate to the left
             lin_x = 0;  // no movement forward
         }
         else if (avg_ball_location > right_limit)
         {
-            ang_z = -0.1 - 0.4 * (avg_ball_location - right_limit) / side_limit;  // rotate to the right
+            ang_z = -0.3 - 0.4 * (avg_ball_location - right_limit) / side_limit;  // rotate to the right
             lin_x = 0;  // no movement forward
         }
         else
         {
             if (avg_ball_location > mid_limit)
             {
-                ang_z = -0.1 * (avg_ball_location - mid_limit) / (side_limit / 2);  // small rotation to the right
-                lin_x = 0.4 - 0.3 * (avg_ball_location - mid_limit) / (side_limit / 2);  // moderate move forward
+                ang_z = -0.5 * (avg_ball_location - mid_limit) / (side_limit / 2);  // small rotation to the right
+                lin_x = 0.3 - 0.3 * (avg_ball_location - mid_limit) / (side_limit / 2);  // moderate move forward
             }
             else if (avg_ball_location < mid_limit)
             {
-                ang_z = 0.1 * (mid_limit - avg_ball_location) / (side_limit / 2);  // small rotation to the left
-                lin_x = 0.4 - 0.3 * (mid_limit - avg_ball_location) / (side_limit / 2);  // moderate move forward
+                ang_z = 0.5 * (mid_limit - avg_ball_location) / (side_limit / 2);  // small rotation to the left
+                lin_x = 0.3 - 0.3 * (mid_limit - avg_ball_location) / (side_limit / 2);  // moderate move forward
             }
             else
             {
